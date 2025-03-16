@@ -5,6 +5,7 @@ import com.joaquinogallar.parrobackend.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ProductService {
@@ -22,5 +23,9 @@ public class ProductService {
     public String createProduct(Product product) {
         productRepository.save(product);
         return "created";
+    }
+
+    public Product getProductById(UUID id) {
+        return productRepository.findById(id).orElse(null);
     }
 }
