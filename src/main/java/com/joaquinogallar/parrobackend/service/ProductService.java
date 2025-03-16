@@ -1,6 +1,7 @@
 package com.joaquinogallar.parrobackend.service;
 
 import com.joaquinogallar.parrobackend.entity.Product;
+import com.joaquinogallar.parrobackend.exception.product.ProductNotFoundException;
 import com.joaquinogallar.parrobackend.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,9 @@ public class ProductService {
     }
 
     public Product getProductById(UUID id) {
-        return productRepository.findById(id).orElse(null);
+        Product product = productRepository.findById(id).orElse(null);
+        if(product == null) throw new ProductNotFoundException("Product not found");
+
+        return product;
     }
 }
