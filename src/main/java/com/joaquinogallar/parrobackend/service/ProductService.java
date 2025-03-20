@@ -6,6 +6,7 @@ import com.joaquinogallar.parrobackend.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -25,10 +26,17 @@ public class ProductService {
         productRepository.save(product);
         return "created";
     }
-// 1136932090
+
     public Product getProductById(UUID id) {
         Product product = productRepository.findById(id).orElse(null);
         if(product == null) throw new ProductNotFoundException("Product not found");
+
+        return product;
+    }
+
+    public Optional<Product> getProductByName(String productName) {
+        Optional<Product> product = productRepository.findProductByProductName(productName);
+        if(product.isEmpty()) throw new ProductNotFoundException("Product not found");
 
         return product;
     }
